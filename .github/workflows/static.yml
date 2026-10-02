@@ -1,43 +1,253 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+<!DOCThtml><html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>fashionpoint.com | Aevum</title>
+  <meta name="description" content="Aevum by fashionpoint.com: timeless capsule wardrobe essentials crafted beyond seasons.">
+  <style>
+    :root {
+      --bg: #f6f1ea;
+      --surface: #fffaf4;
+      --surface-2: #ede5da;
+      --text: #1f1b17;
+      --muted: #6e6359;
+      --line: rgba(31, 27, 23, 0.12);
+      --accent: #6b5b4b;
+      --accent-dark: #3b3128;
+      --shadow: 0 24px 60px rgba(56, 42, 30, 0.1);
+      --radius: 24px;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 35%),
+        linear-gradient(180deg, #fbf7f1 0%, var(--bg) 100%);
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 30; backdrop-filter: blur(16px);
+      background: rgba(246, 241, 234, 0.78); border-bottom: 1px solid var(--line);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px 0; }
+    .brand { font-size: 1rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 700; }
+    .navlinks { display: flex; flex-wrap: wrap; gap: 16px; color: var(--muted); font-size: 0.94rem; }
+    .navlinks a:hover { color: var(--text); }
+    .hero { padding: 42px 0 28px; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 28px; align-items: stretch; }
+    .eyebrow { text-transform: uppercase; letter-spacing: 0.22em; color: var(--accent); font-size: 0.78rem; font-weight: 700; }
+    h1, h2, h3 { margin: 0; line-height: 1.02; }
+    h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3.1rem, 8vw, 6.5rem); font-weight: 500; letter-spacing: -0.04em; margin-top: 14px; }
+    .lead { color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.18rem); line-height: 1.75; max-width: 56ch; margin: 22px 0 28px; }
+    .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 999px; padding: 14px 20px; font-weight: 600; border: 1px solid var(--line); }
+    .btn.primary { background: var(--accent-dark); color: #fff; border-color: transparent; box-shadow: var(--shadow); }
+    .btn.secondary { background: rgba(255,255,255,0.55); }
+    .hero-card, .panel, .product, .feature, .blog-card, .gallery-item, .price-card, .contact-card { background: rgba(255,250,244,0.86); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .hero-card { padding: 18px; }
+    .card-label { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 12px; color: var(--muted); font-size: 0.9rem; }
+    .card-label strong { color: var(--text); letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.78rem; }
+    .hero-image { aspect-ratio: 4 / 5; border-radius: calc(var(--radius) - 8px); background:
+      linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.12)),
+      url('/images/hero.jpg') center/cover no-repeat; min-height: 560px; display: flex; align-items: end; padding: 20px; }
+    .hero-overlay { color: #fff; max-width: 22rem; }
+    .hero-overlay .stat { display: inline-block; margin-top: 12px; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(10px); }
+    .section { padding: 28px 0 6px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
+    .section p { color: var(--muted); line-height: 1.7; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .product, .feature, .blog-card, .price-card { padding: 18px; }
+    .product img, .blog-card img, .gallery-item img { border-radius: 18px; aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
+    .meta { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; color: var(--muted); font-size: 0.94rem; }
+    .price { font-size: 1.1rem; font-weight: 700; color: var(--accent-dark); }
+    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: rgba(107,91,75,0.08); color: var(--accent-dark); font-size: 0.86rem; margin-bottom: 12px; }
+    .feature { min-height: 100%; }
+    .feature h3, .blog-card h3, .price-card h3, .contact-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+    .stack { display: grid; gap: 12px; }
+    .about-wrap { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 18px; align-items: center; }
+    .about-box { padding: 24px; }
+    .gallery { display: grid; grid-template-columns: 1.2fr 0.8fr 1fr; gap: 18px; }
+    .gallery-item { overflow: hidden; }
+    .gallery-item img { height: 100%; min-height: 250px; }
+    .marketing-collage { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 18px; }
+    .marketing-collage .left, .marketing-collage .right { display: grid; gap: 18px; }
+    .marketing-collage .left img, .marketing-collage .right img { width: 100%; height: 100%; object-fit: cover; border-radius: 22px; box-shadow: var(--shadow); }
+    .marketing-collage .left img { min-height: 720px; }
+    .marketing-collage .right { grid-template-rows: 1fr 1fr; }
+    .marketing-collage .bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .blog-card img { aspect-ratio: 16 / 10; margin-bottom: 14px; }
+    .contact-card { padding: 24px; }
+    form { display: grid; gap: 14px; }
+    input, textarea {
+      width: 100%; border-radius: 16px; border: 1px solid var(--line); background: rgba(255,255,255,0.75); padding: 14px 16px; font: inherit; color: var(--text);
+    }
+    textarea { min-height: 140px; resize: vertical; }
+    .footer { padding: 28px 0 40px; color: var(--muted); }
+    @media (max-width: 960px) {
+      .hero-grid, .grid-3, .grid-2, .about-wrap, .gallery { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+      .hero-image { min-height: 460px; }
+    }
+  </style>
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <div class="brand">fashionpoint.com</div>
+      <nav class="navlinks">
+        <a href="#products">Products</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#blog">Blog</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="">
+          <div class="eyebrow">Aevum</div>
+          <h1 class="">Crafted beyond seasons.</h1>
+          <p class="lead">Monochromatic essentials for the urban professional wardrobe. Aevum is built from heavyweight linen, organic wool, and structured cotton, shaped into calm silhouettes that hold their value across every season.</p>
+          <div class="actions">
+            <a class="btn primary" href="#products">Shop essentials</a>
+            <a class="btn secondary" href="#contact">Request styling help</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="card-label"><strong>Editorial set</strong><span>Aevum brand campaign</span></div>
+          <div class="marketing-collage">
+            <div class="left">
+              <img src="/images/marketing-hero.jpg" alt="White dress shirt on a wooden hanger" class="">
+            </div>
+            <div class="right">
+              <img src="/images/marketing-top.jpg" alt="Dark tailored blazer on a wooden hanger" class="">
+              <div class="bottom">
+                <img src="/images/marketing-knit.jpg" alt="Folded navy knit on a wooden desk" class="">
+                <img src="/images/marketing-trouser.jpg" alt="Dark denim jeans with branded label" class="">
+              </div>
+            </div>
+          </div>
+          <div class="hero-image" style="margin-top:18px;">
+            <div class="hero-overlay">
+              <div class="eyebrow" style="color:#f5ece2;">Timeless, quiet luxury</div>
+              <h3 style="margin-top:10px;font-size:1.8rem;">A capsule wardrobe, refined to essentials.</h3>
+              <div class="stat">Seasonless edits for work, travel, and rest.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    <section id="products" class="section wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Products</div>
+          <h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">Foundational pieces with a tailored calm.</h2>
+        </div>
+        <p style="max-width:44ch;">A focused assortment designed to pair effortlessly, layer cleanly, and stay relevant for years.</p>
+      </div>
+      <div class="grid-3">
+        <article class="product">
+          <img src="/images/marketing-hero.jpg" alt="White dress shirt on a wooden hanger" class="">
+          <div class="meta"><strong>Linen Blazer</strong><span class="price">$240</span></div>
+          <p>Structured yet soft, cut for everyday polish.</p>
+        </article>
+        <article class="product">
+          <img src="/images/marketing-top.jpg" alt="Dark tailored blazer on a wooden hanger" class="">
+          <div class="meta"><strong>Wool Knit</strong><span class="price">$180</span></div>
+          <p>Heavyweight warmth with a clean, monochrome finish.</p>
+        </article>
+        <article class="product">
+          <img src="/images/marketing-trouser.jpg" alt="Dark denim jeans with branded label" class="">
+          <div class="meta"><strong>Cotton Trouser</strong><span class="price">$160</span></div>
+          <p>Relaxed precision for office hours and off-hours alike.</p>
+        </article>
+      </div>
+    </section>
 
-jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+    <section id="features" class="section wrap">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Features</div>
+          <h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">Designed around longevity and ease.</h2>
+        </div>
+      </div>
+      <div class="grid-3">
+        <div class="feature"><div class="chip">01</div><h3>Seasonless palette</h3><p>Ivory, stone, charcoal, and black create an adaptable wardrobe system.</p></div>
+        <div class="feature"><div class="chip">02</div><h3>Responsible materials</h3><p>Heavyweight linen, organic wool, and structured cotton elevate feel and durability.</p></div>
+        <div class="feature"><div class="chip">03</div><h3>Precision fit</h3><p>Tailored silhouettes bring clarity to dressing without sacrificing comfort.</p></div>
+      </div>
+    </section>
+
+    <section id="pricing" class="section wrap">
+      <div class="section-head"><div><div class="eyebrow">Pricing</div><h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">Transparent tiers for every wardrobe reset.</h2></div></div>
+      <div class="grid-3">
+        <div class="price-card"><h3>Essential</h3><div class="price" style="font-size:2rem;">₹21,999</div><p>One signature piece, ideal for starting a capsule foundation.</p></div>
+        <div class="price-card"><h3>Core Set</h3><div class="price" style="font-size:2rem;">₹52,999</div><p>Three coordinated staples with priority styling support.</p></div>
+        <div class="price-card"><h3>Complete Wardrobe</h3><div class="price" style="font-size:2rem;">₹91,999</div><p>Five-piece edit for a fully streamlined seasonal rotation.</p></div>
+      </div>
+    </section>
+
+    <section id="blog" class="section wrap">
+      <div class="section-head"><div><div class="eyebrow">Blog</div><h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">Notes on lasting style.</h2></div></div>
+      <div class="grid-3">
+        <article class="blog-card"><img src="/images/marketing-top.jpg" alt="Dark tailored blazer on a wooden hanger" class=""><h3>How to build a capsule that feels personal</h3><p>Start with texture, proportion, and a restrained palette.</p></article>
+        <article class="blog-card"><img src="/images/marketing-hero.jpg" alt="White dress shirt on a wooden hanger" class=""><h3>The case for heavier fabrics year-round</h3><p>Why weight, drape, and structure matter more than trends.</p></article>
+        <article class="blog-card"><img src="/images/marketing-trouser.jpg" alt="Dark denim jeans with branded label" class=""><h3>Monochrome dressing without feeling repetitive</h3><p>Small shifts in silhouette keep an edited wardrobe dynamic.</p></article>
+      </div>
+    </section>
+
+    <section id="about" class="section wrap">
+      <div class="about-wrap">
+        <div class="about-box panel">
+          <div class="eyebrow">About</div>
+          <h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">Aevum is for the modern professional who values restraint.</h2>
+        </div>
+        <div class="about-box panel">
+          <p>Aevum takes its name from the Latin word for an eternal era. The collection is designed for urban professionals who want clarity, confidence, and clothes that quietly outperform a seasonal cycle. Every piece is edited to feel current now and relevant later.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="section wrap">
+      <div class="section-head"><div><div class="eyebrow">Gallery</div><h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">A visual language of texture and tone.</h2></div></div>
+      <div class="gallery">
+        <div class="gallery-item"><img src="/images/marketing-hero.jpg" alt="White dress shirt on a wooden hanger" class=""></div>
+        <div class="gallery-item"><img src="/images/marketing-top.jpg" alt="Dark tailored blazer on a wooden hanger" class=""></div>
+        <div class="gallery-item"><img src="/images/marketing-trouser.jpg" alt="Dark denim jeans with branded label" class=""></div>
+      </div>
+    </section>
+
+    <section id="contact" class="section wrap">
+      <div class="contact-card">
+        <div class="section-head" style="margin-bottom:14px;"><div><div class="eyebrow">Contact</div><h2 style="font-family:Georgia,serif;font-size:clamp(2rem,4vw,3.2rem);margin-top:10px;">Talk to styling support.</h2></div><p style="max-width:36ch;">Use the form for product questions, fit guidance, or wholesale inquiries.</p></div>
+        <form action="/__landingpage/form-submit" method="POST" id="contact-form">
+          <input type="text" name="name" required="" placeholder="Your name" fdprocessedid="fv5im">
+          <input type="email" name="email" required="" placeholder="your@email.com" fdprocessedid="tytltq">
+          <input type="tel" name="phone" placeholder="Phone number" fdprocessedid="lve9bs">
+          <textarea name="message" required="" placeholder="Tell us what you're looking for"></textarea>
+          <button class="btn primary" type="submit" fdprocessedid="hj171m">Send inquiry</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer wrap">
+    fashionpoint.com · Aevum · Crafted beyond seasons.
+  </footer>
+</body>
+</html>
+YPE 
